@@ -126,14 +126,20 @@ public class BinaryTree<E>
 	}
 	
 	public boolean isEmpty() {
-		if(this.equals(EMPTY))
-			return true;
-		return false;
+		return this == EMPTY;
 	}
 
 	public String treeString() {
-		
-		return null;
+		String inOrder = "";
+		if(!left.isEmpty())
+			inOrder += left.treeString();
+		if(inOrder.equals(""))
+			inOrder += val.toString();
+		else
+			inOrder += ", " + val.toString();
+		if(!right.isEmpty())
+			inOrder += right.treeString();
+		return inOrder;
 	}
 
 	public Iterator<E> inorderIterator() {
