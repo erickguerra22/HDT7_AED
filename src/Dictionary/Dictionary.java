@@ -1,5 +1,7 @@
 package Dictionary;
 
+import java.util.Iterator;
+
 import Tree.BinarySearchTree;
 import Tree.ComparableAssociation;
 
@@ -29,7 +31,54 @@ public Dictionary() {}
 		}
 	}
 	
+	private String englishToSpanish(String word) {
+		Iterator<ComparableAssociation<String, String>> iterator = english.iterator();
+		while(iterator.hasNext()) {
+			ComparableAssociation<String,String> found = iterator.next();
+			if(found.getKey().toLowerCase().equals(word.toLowerCase()))
+				word = found.getValue();
+		}
+		return word;
+	}
 	
+	private String frenchToSpanish(String word) {
+		Iterator<ComparableAssociation<String, String>> iterator = french.iterator();
+		while(iterator.hasNext()) {
+			ComparableAssociation<String,String> found = iterator.next();
+			if(found.getKey().toLowerCase().equals(word.toLowerCase())) {
+				word = found.getValue();
+			}
+		}
+		return word;
+	}
+	
+	public String translateText(String[] fileContent) {
+		String text = fileToText(fileContent);
+		String transText = "";
+		String[] words = text.split(" ");	
+		for(String word : words) {
+			String transWord = "";
+			word = word.replaceAll("['\\/\",:;.]", "");
+			transWord = englishToSpanish(word);
+			if(word.equals(transWord))
+				transWord = frenchToSpanish(word);
+			transWord = transWord.equals(word) ? "*"+ word +"*" : transWord;
+			transText += transWord + " ";
+		}
+		return transText;
+	}
+	
+	public String getEnglish() {
+		String message = "Contenido inOrder del diccionario ingles-espanol";
+		message += "\n"+english.treeString();
+		return message;
+	}
+	
+	public String getFrench() {
+		String message = "Contenido inOrder del diccionario frances-espanol";
+		message += "\n"+french.treeString();
+		return message;
+	}
 	
 	private String fileToText(String[] fileContent) {
 		String text = "";

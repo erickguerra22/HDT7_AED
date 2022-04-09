@@ -184,6 +184,7 @@ public class BinarySearchTree<E extends Comparable<E>>
 
         // add value to binary search tree 
         // if there's no root, create value at root
+        
         if (root.isEmpty())
         {
             root = newNode;

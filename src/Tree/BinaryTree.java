@@ -15,7 +15,6 @@ public class BinaryTree<E>
     protected E val; // value associated with node
 	protected BinaryTree<E> parent; // parent of node
 	protected BinaryTree<E> left, right; // children of node
-	protected final BinaryTree<E> EMPTY = new BinaryTree<E>();
 	
 	public BinaryTree()
 	// post: constructor that generates an empty node
@@ -80,6 +79,7 @@ public class BinaryTree<E>
 		if (isEmpty()) return;
 		if (right != null && right.parent() == this) right.setParent(null);
 		right = newRight;
+		right.setParent(this);
 	}
 	
 	protected void setParent(BinaryTree<E> newParent)
@@ -126,25 +126,22 @@ public class BinaryTree<E>
 	}
 	
 	public boolean isEmpty() {
-		return this == EMPTY;
+		return this.val == null;
 	}
 
 	public String treeString() {
 		String inOrder = "";
-		if(!left.isEmpty())
-			inOrder += left.treeString();
-		if(inOrder.equals(""))
-			inOrder += val.toString();
-		else
-			inOrder += ", " + val.toString();
-		if(!right.isEmpty())
-			inOrder += right.treeString();
-		return inOrder;
+		Iterator<E> iterator = this.inorderIterator();
+		while(iterator.hasNext()) {
+			E found = iterator.next();
+			inOrder += found.toString() + " ";
+		}
+		return inOrder.substring(0,inOrder.length()-2)+".";
 	}
 
 	public Iterator<E> inorderIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		TreeIterator<E> it = new TreeIterator<E>(this);
+		return it;
 	}
 	
 }
