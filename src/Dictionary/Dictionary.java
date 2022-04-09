@@ -73,13 +73,13 @@ public Dictionary() {}
 	}
 	
 	public String getEnglish() {
-		String message = "Contenido inOrder del diccionario ingles-espanol";
+		String message = "Contenido inOrder del diccionario ingles-espanol:";
 		message += "\n"+english.treeString();
 		return message;
 	}
 	
 	public String getFrench() {
-		String message = "Contenido inOrder del diccionario frances-espanol";
+		String message = "Contenido inOrder del diccionario frances-espanol:";
 		message += "\n"+french.treeString();
 		return message;
 	}
@@ -159,7 +159,7 @@ public Dictionary() {}
 		iterator = english.iterator();
 		while(iterator.hasNext()) {
 			ComparableAssociation<String,String> match = iterator.next();
-			if(found.getKey().toLowerCase().equals(eng.toLowerCase()))
+			if(match.getKey().toLowerCase().equals(eng.toLowerCase()))
 				found = match;
 		}
 		

@@ -38,17 +38,15 @@ public class Main {
 					scan.nextLine();
 				}
 			}	
-			System.out.println("\nA continuacion se muestra el contenido de ambos diccionarios:");
-			System.out.println(dictionary.getEnglish());
-			System.out.println(dictionary.getFrench());
 			while(!end) {
 				String menu = """
 						\n1. Agregar una palabra al diccionario.
 						2. Eliminar una palabra existente.
 						3. Modificar una palabra existente.
 						4. Traducir un texto completo.
-						5. Salir.""";
-				int option = pregunta(menu, 5, scan);
+						5. Mostrar diccionarios inOrder.
+						6. Salir.""";
+				int option = pregunta(menu, 6, scan);
 				
 				String esp;
 				String eng;
@@ -103,6 +101,11 @@ public class Main {
 					}	
 					break;
 				case 5:
+					System.out.println("\nA continuacion se muestra el contenido de ambos diccionarios:");
+					System.out.println(dictionary.getEnglish());
+					System.out.println(dictionary.getFrench());
+					break;
+				case 6:
 					System.out.println("Gracias por utilizar el programa!"); 
 					end = true;
 					mainEnd = true;
