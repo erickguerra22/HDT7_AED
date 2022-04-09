@@ -27,7 +27,6 @@ public class Main {
 			boolean found = false;
 			while(!found) {
 				String[] fileContent = null;
-				boolean repeat = true;
 				try { //Se encuentra el archivo
 					fileContent = FileController.readFile("diccionario");
 					System.out.println("El archivo diccionario.txt se ha encontrado y es valido.");
@@ -45,33 +44,52 @@ public class Main {
 			while(!end) {
 				String menu = """
 						\n1. Agregar una palabra al diccionario.
-						2. Traducir un texto completo.
-						3. Salir.""";
-				int option = pregunta(menu, 3, scan);
+						2. Eliminar una palabra existente.
+						3. Modificar una palabra existente.
+						4. Traducir un texto completo.
+						5. Salir.""";
+				int option = pregunta(menu, 5, scan);
 				
-				boolean repeat = true;
+				String esp;
+				String eng;
+				String fren;
 				switch(option) { 
 				case 1:
-					menu = """
-							Seleccione un idioma:
-							1. Ingles
-							2. Frances
-							""";
-					int language = pregunta(menu,2,scan);
 					System.out.println("Ingresa la palabra en espaniol:");
-					String newWord = scan.nextLine();
-					System.out.println("Ingresa su traduccion al idioma que elegiste:");
-					String newTrans = scan.nextLine();
-					if(language == 1)
-						System.out.println(dictionary.addEnglish(newWord, newTrans));
-					else
-						System.out.println(dictionary.addFrench(newWord, newTrans));
+					esp = scan.nextLine();
+					System.out.println("Ingresa su traduccion a ingles:");
+					eng= scan.nextLine();
+					System.out.println("Ingresa su traduccion a frances:");
+					fren = scan.nextLine();
+					System.out.println(dictionary.newWord(esp, eng, fren));
 					break;
 				case 2:
+					System.out.println("Ingresa la palabra en ingles:");
+					eng = scan.nextLine();
+					System.out.println("Ingresa la palabra en frances:");
+					fren = scan.nextLine();
+					System.out.println(dictionary.removeWord(eng,fren));
+					break;
+				case 3:
+					System.out.println("Ingresa la palabra actual en ingles");
+					eng = scan.nextLine();
+					System.out.println("Ingresa la palabra actual en frances");
+					fren = scan.nextLine();
+					if(dictionary.wordFound(eng,fren)) {
+						System.out.println("Ingrese la nueva palabra en espanol (si no desea modificarla, ingrese la que existe actualmente)");
+						esp = scan.nextLine();
+						System.out.println("Ingrese la nueva palabra en ingles (si no desea modificarla, ingrese la que existe actualmente)");
+						eng = scan.nextLine();
+						System.out.println("Ingrese la nueva palabra en frances (si no desea modificarla, ingrese la que existe actualmente)");
+						fren = scan.nextLine();
+						System.out.println(dictionary.updateWord(esp, eng, fren));
+					}else 
+						System.out.println("La palabra deseada no existe en ninguno de los dos diccionarios.");
+					break;
+				case 4:
 					found = false;
 					while(!found) {
 						String[] fileContent = null;
-						repeat = true;
 						try { //Se encuentra el archivo
 							fileContent = FileController.readFile("texto");
 							System.out.println("El archivo texto.txt se ha encontrado y es valido.\nTraduciendo...\nTraduccion:\n");
@@ -84,10 +102,11 @@ public class Main {
 						}
 					}	
 					break;
-				case 3:
+				case 5:
 					System.out.println("Gracias por utilizar el programa!"); 
 					end = true;
 					mainEnd = true;
+					dictionary.updateDictionary();
 					break;
 				default: //Opcion no valida
 					System.out.println("Opcion no valida");
